@@ -7,32 +7,36 @@ import Register from "./routes/Register";
 import Shopping from "./routes/Shopping";
 
 import { Toaster, toast } from "react-hot-toast";
-import { onMessage } from 'firebase/messaging';
+import { onMessage } from "firebase/messaging";
 
 import "./index.css";
+import Footer from "./components/Footer";
 
 export const AppContext = createContext(null);
 
-onMessage(messaging, payload => {
+onMessage(messaging, (payload) => {
   console.log("New notification", payload);
   toast(payload.notification.body);
   // You can customize your toast by use toast.custom with Tailwindcss or whatever
-})
+});
 
 function App() {
   const [route, setRoute] = useState("home");
   const [user, setUser] = useState(null);
   return (
     <AppContext.Provider value={{ route, setRoute, user, setUser }}>
-    <Toaster />
-      <Header />
-      <main className="p-6">
-        {route === "home" && <Home />}
-        {route === "login" && <Login />}
-        {route === "register" && <Register />}
-        {route === "shopping" && <Shopping />}
-        {user && <p>Welcome { user.email}</p>}
-      </main>
+      <div className="h-screen">
+        <Toaster />
+        <Header />
+        <main className="p-6 pt-24 pb-20">
+          {route === "home" && <Home />}
+          {route === "login" && <Login />}
+          {route === "register" && <Register />}
+          {route === "shopping" && <Shopping />}
+          {user && <p>Welcome {user.email}</p>}
+        </main>
+        <Footer />
+      </div>
     </AppContext.Provider>
   );
 }
