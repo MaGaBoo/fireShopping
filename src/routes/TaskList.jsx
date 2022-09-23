@@ -1,19 +1,44 @@
-import React, { useState } from "react";
-import { db} from "../firebase/index";
-import { addNewTask } from "../firebase/taskController";
+import React, { useState, useEffect } from "react";
+import { db } from "../firebase/index";
+import { addNewTask, deleteTask, getTasks, updateTask } from "../firebase/taskController";
 
-const task = {
-  title: "Task title",
-  description: "Description goes here",
-};
-
-const createNewTask = async () => {
-  console.table(task);
-  await addNewTask(task);
-}
-
-const ShoppingList = () => {
+const TaskList = () => {
   const [task, setTask] = useState({ title: "", description: "" });
+  const [tasks, setTasks] = useState([]);
+  const [mode, setMode] = useState("add");
+
+  const createNewTask = async () => {
+    await addNewTask(task);
+    setTask({ title: "", description: "" });
+    initializeTasks();
+  };
+  const updateCurrentTask = async () => {
+    await updateTask(task);
+    setTask({ title: "", description: "" });
+    initializeTasks();
+    setMode("add");
+  };
+
+  const initializeTasks = () => {
+    getTasks()
+      .then((t) => setTasks([...t]))
+      .catch((error) => console.error(error));
+  };
+
+  const editTask = (id) => {
+    setMode("update");
+    const taskToEdit = tasks.find((t) => t.id === id);
+    setTask({ ...taskToEdit });
+  };
+
+  const removeTask = async id => {
+   await deleteTask(id);
+   initializeTasks();
+  };
+
+  useEffect(() => {
+    initializeTasks();
+  }, []);
 
   return (
     <div>
@@ -37,13 +62,40 @@ const ShoppingList = () => {
         />
         <button
           className="bg-sky-400 text-white rounded shadow py-1 hover:bg-sky-500 transition font-semibold"
-          onClick={createNewTask}
+          onClick={() => mode === "add" ? createNewTask() : updateCurrentTask() }
         >
-          Add
+          { mode === "add" ? "Add" : "Update" }
         </button>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        {tasks.map((task) => (
+          <div
+            key={task.id}
+            className="rounded-lg border border-sky-300 p-4 flex flex-col gap-2"
+          >
+            <h1 className="font-semibold">{task.title}</h1>
+            <div className="border-t border-sky-300"></div>
+            <p className="font-semibold">{task.description}</p>
+            <div className="flex justify-between">
+              <button
+                className="bg-sky-400 text-white py-1 px-2 rounded"
+                onClick={() => editTask(task.id)}
+              >
+                Edit
+              </button>
+              <button
+                className="bg-red-600 text-white py-1 px-2 rounded"
+                // eslint-disable-next-line no-restricted-globals
+                onClick={() => window.confirm("Are you sure you want to delete this task?") && removeTask(task.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default ShoppingList;
+export default TaskList;
