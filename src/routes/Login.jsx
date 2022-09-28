@@ -59,9 +59,9 @@ signInWithEmailAndPassword(auth, email, password)
       <p className="text-sm mb-8">Login with your email accound</p>
       <div className="flex flex-col gap-4 items-center">
       <form onSubmit={doLogin} className="flex flex-col gap-2 max-w-sm">
-      <input className="border border-gray-500 rounded py-1 px-2 outline-none" type="email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input className="border border-gray-500 rounded py-1 px-2 outline-none" type="pasword" value={password} onChange={e => setPassword(e.target.value)} />
-        <button className="bg-sky-600 py-1 text-white rounded shadow hover:bg-sky-800">Login</button>
+      <input className="border border-gray-500 rounded py-1 px-2 outline-none" placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} />
+        <input className="border border-gray-500 rounded py-1 px-2 outline-none" placeholder="Password" type="pasword" value={password} onChange={e => setPassword(e.target.value)} />
+        <button className="bg-sky-600 py-1 text-white rounded shadow hover:bg-sky-800">Start</button>
         <button onClick={doLoginGoogle}>... or login with Google </button>
         </form>
       </div>

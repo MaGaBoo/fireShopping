@@ -23,7 +23,7 @@ const { setRoute } = useContext(AppContext);
           <BsFillCartFill />
         </div>
         <div 
-        className="bg-sky-200 p-2 rounded-full text-3xl text-sky-600 cursor-pointer hover:bg-sky-50 transition"
+        className="bg-sky-200 p-2 rounded-full text-3xl text-sky-600 cursor-pointer hover:bg-sky-50 transition list-route"
         onClick={() => setRoute("taskList")}
         >
           <BsList />

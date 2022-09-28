@@ -39,9 +39,9 @@ const Register = () => {
     <div className="flex flex-col gap-4 items-center">
       <h1 className="text-sky-700 font-semibold text-center">Regístrate y empieza a disfrutar de FireShopping</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm">
-        <input className="border border-gray-500 rounded py-1 px-2 outline-none" type="email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input className="border border-gray-500 rounded py-1 px-2 outline-none" type="pasword" value={password} onChange={e => setPassword(e.target.value)} />
-        <button className="bg-sky-600 py-1 text-white rounded shadow hover:bg-sky-800">Register</button>
+        <input className="border border-gray-500 rounded py-1 px-2 outline-none" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+        <input className="border border-gray-500 rounded py-1 px-2 outline-none" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+        <button className="bg-sky-600 py-1 text-white rounded shadow hover:bg-sky-800">Register me!</button>
       </form>
     </div>
   );
